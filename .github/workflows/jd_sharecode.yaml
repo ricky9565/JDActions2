@@ -1,0 +1,42 @@
+name: 提交互助码
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 19 * * *'
+  #watch:
+  #  types: started
+  #repository_dispatch:
+  #  types: jd_sharecode
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    env:
+      JX_FACTORY_CODE: ${{ secrets.JX_FACTORY_CODE }}
+      JD_FACTORY_CODE: ${{ secrets.JD_FACTORY_CODE }}
+      JD_BEAN_CODE: ${{ secrets.JD_BEAN_CODE }}
+      JD_FARM_CODE: ${{ secrets.JD_FARM_CODE }}
+      JD_PET_CODE: ${{ secrets.JD_PET_CODE }}
+      JD_ZZ_CODE: ${{ secrets.JD_ZZ_CODE }}
+      JD_CRAZYJOY_CODE: ${{ secrets.JD_CRAZYJOY_CODE }}
+      JD_CASH_CODE: ${{ secrets.JD_CASH_CODE }}
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@master
+      - name: 提交京喜工厂互助码
+        run: curl -v "$JX_FACTORY_CODE"
+      - name: 提交京东工厂互助码
+        run: curl -v "$JD_FACTORY_CODE"
+      - name: 提交种豆得豆互助码
+        run: curl -v "$JD_BEAN_CODE"
+      - name: 提交东东农场互助码
+        run: curl -v "$JD_FARM_CODE"
+      - name: 提交东东萌宠互助码
+        run: curl -v "$JD_PET_CODE"
+      - name: 提交疯狂的joy互助码
+        run: curl -v "$JD_CRAZYJOY_CODE"
+      - name: 提交京东赚赚互助码
+        run: curl -v "$JD_ZZ_CODE"
+      - name: 提交京东签到领现金互助码
+        run: curl -v "$JD_CASH_CODE"
